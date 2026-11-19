@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="card" style="max-width: 400px; margin: 40px auto; padding: 30px;">
+        <h2 style="margin-bottom: 20px;">Регистрация</h2>
+        <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Имя</label>
+                {{ form.username(class="form-control", placeholder="Как вас зовут?") }}
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Email</label>
+                {{ form.email(class="form-control", placeholder="you@example.com") }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Пароль</label>
+                {{ form.password(class="form-control", placeholder="Минимум 6 символов") }}
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Создать аккаунт</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

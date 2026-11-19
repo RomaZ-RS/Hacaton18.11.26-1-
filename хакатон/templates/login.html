@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Вход — Кампус-Афиша{% endblock %}
+
+{% block content %}
+<!--Окно входа -->
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+    background-color: #f8fafc;
+">
+    <!-- Карточка входа -->
+    <div style="
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid #e2e8f0;
+    ">
+        <h2 style="
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #0f172a;
+            font-size: 26px;
+        ">Вход в систему</h2>
+        <p style="
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 15px;
+        ">Рады видеть вас снова!</p>
+
+        <!--Ошибка (если ввели неверный пароль) -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="
+                        background: #fee2e2;
+                        color: #b91c1c;
+                        padding: 12px;
+                        border-radius: 8px;
+                        margin-bottom: 20px;
+                        font-size: 14px;
+                        text-align: center;
+                    ">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Форма входа -->
+        <form method="POST" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Email -->
+            <div>
+                <label for="email" style="display: block; margin-bottom: 6px; color: #334155; font-weight: 500; font-size: 14px;">Email</label>
+                <input type="email" id="email" name="email" required placeholder="student@example.com" style="
+                    width: 100%;
+                    padding: 12px 15px;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 10px;
+                    font-size: 15px;
+                    box-sizing: border-box;
+                    outline: none;
+                    transition: border-color 0.2s;
+                " onfocus="this.style.borderColor='#1e3a8a'" onblur="this.style.borderColor='#cbd5e1'">
+            </div>
+
+            <!-- Пароль -->
+            <div>
+                <label for="password" style="display: block; margin-bottom: 6px; color: #334155; font-weight: 500; font-size: 14px;">Пароль</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••" style="
+                    width: 100%;
+                    padding: 12px 15px;
+                    border: 1px solid #cbd5e1;
+                    border-radius: 10px;
+                    font-size: 15px;
+                    box-sizing: border-box;
+                    outline: none;
+                    transition: border-color 0.2s;
+                " onfocus="this.style.borderColor='#1e3a8a'" onblur="this.style.borderColor='#cbd5e1'">
+            </div>
+
+            <!-- Кнопка Войти -->
+            <button type="submit" style="
+                background: #f59e0b;
+                color: white;
+                padding: 14px;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-top: 10px;
+                transition: background 0.2s, transform 0.1s;
+            " onmouseover="this.style.background='#d97706'" onmouseout="this.style.background='#f59e0b'" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'">
+                Войти
+            </button>
+        </form>
+
+        <!--Регистрация -->
+        <div style="text-align: center; margin-top: 25px; font-size: 14px; color: #64748b;">
+            Нет аккаунта?
+            <a href="{{ url_for('register_page') }}" style="color: #1e3a8a; font-weight: 600; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Зарегистрироваться</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

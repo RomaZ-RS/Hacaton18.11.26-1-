@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Кампус-Афиша{% endblock %}</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #0f172a; line-height: 1.5; }
+        a { text-decoration: none; }
+
+        /* Навигация */
+        header { background: white; border-bottom: 1px solid #e2e8f0; padding: 0 20px; }
+        nav { max-width: 1000px; margin: 0 auto; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-weight: 700; font-size: 20px; color: #0f172a; }
+        .nav-links { display: flex; gap: 24px; align-items: center; }
+        .nav-links a { color: #475569; font-size: 15px; font-weight: 500; }
+        .nav-links a:hover { color: #0f172a; }
+
+        /* Контейнер */
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Кнопки */
+        .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 500; font-size: 15px; cursor: pointer; border: none; text-align: center; transition: 0.2s; }
+        .btn-primary { background: #1e3a8a; color: white; }
+        .btn-primary:hover { background: #1e40af; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e1; color: #334155; }
+        .btn-outline:hover { background: #f1f5f9; }
+
+        /* Сетка карточек */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; }
+
+        /* Формы */
+        .form-box { background: white; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; width: 100%; max-width: 400px; margin: 60px auto; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #334155; font-size: 14px; font-weight: 500; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; }
+        .form-control:focus { border-color: #1e3a8a; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('home') }}" class="logo">Кампус-Афиша</a>
+            <div class="nav-links">
+                <a href="{{ url_for('about') }}">О проекте</a>
+                <a href="{{ url_for('contacts') }}">Контакты</a>
+                {% if session.get('user_email') %}
+                    <a href="{{ url_for('cabinet') }}">Личный кабинет</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-outline" style="padding: 6px 12px; font-size: 14px;">Выйти</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary" style="padding: 6px 14px; font-size: 14px;">Войти</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+    <main>{% block content %}{% endblock %}</main>
+</body>
+</html>

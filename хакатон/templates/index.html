@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Афиша — Кампус-Афиша{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 40px; text-align: center;">
+        <h1 style="font-size: 32px; margin-bottom: 8px;">Афиша мероприятий</h1>
+        <p style="color: #64748b;">Все события университета в одном месте</p>
+    </div>
+
+    <div class="grid">
+        {% for event in events %}
+        <div class="card">
+            <h2 style="font-size: 20px; margin-bottom: 8px;">{{ event.title or "Без названия" }}</h2>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 20px; flex-grow: 1;">{{ event.description or "Описание отсутствует" }}</p>
+
+            <div style="font-size: 14px; font-weight: 500; margin-bottom: 16px;">
+                {{ event.starts_at.strftime('%d.%m.%Y, %H:%M') if event.starts_at else "Дата не указана" }}
+            </div>
+
+            {% set percent = (event.taken / event.capacity * 100) if event.capacity > 0 else 0 %}
+            <div style="margin-bottom: 20px;">
+                <div style="font-size: 13px; color: #64748b; margin-bottom: 6px;">Записано: {{ event.taken }} из {{ event.capacity }}</div>
+                <div style="background: #f1f5f9; height: 6px; border-radius: 3px; overflow: hidden;">
+                    <div style="background: #1e3a8a; height: 100%; width: {{ percent }}%;"></div>
+                </div>
+            </div>
+
+            {% if event.taken >= event.capacity %}
+                <button disabled class="btn btn-outline" style="width: 100%; opacity: 0.5;">Мест нет</button>
+            {% elif session.get('user_email') %}
+                <a href="{{ url_for('enroll', event_code=event.id) }}" class="btn btn-primary" style="width: 100%;">Записаться</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-outline" style="width: 100%;">Войти для записи</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
